@@ -8,7 +8,7 @@
             <router-link to="/">Home</router-link>
           </li>
           <li>
-            <router-link to="/chatrooms">Make your point</router-link>
+            <router-link to="/lobby">Make your point</router-link>
           </li>   
         </ul>
       </nav>
