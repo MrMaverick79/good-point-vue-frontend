@@ -8,12 +8,12 @@ export const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-          path: '/room/:id',
+          path: '/rooms/:id',
           name: 'Chatroom',
           component: Chatroom
         },
         {
-          path: '/lobby',
+          path: '/rooms',
           name: 'ChatroomsLobby',
           component: ChatroomsLobby
 
