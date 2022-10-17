@@ -1,3 +1,13 @@
+<script>
+
+export default {
+  name: 'App',
+  
+};//end 
+
+
+</script>
+
 <template>
   <div id="app">
     <header>
@@ -12,18 +22,23 @@
           </li>   
         </ul>
       </nav>
-    </header>
-    <hr>
-    
+    </header>   
     <router-view/> 
+      
+    <div>
+
+        <Login />
+
+    </div>
+
+ 
+   
+
+    
+    
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App'
-}
-</script>
 
 
 <style scoped>

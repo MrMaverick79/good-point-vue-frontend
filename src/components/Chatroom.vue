@@ -1,15 +1,23 @@
 <template>
     <!-- Message feed and send message component -->
     <div class="chatroom container">
-        <h4 class="text-red-400">Topic:</h4>
-        <div class="feed">
+        <h3>Welcome, {{user.user.name}}</h3>
+        <h4 class="text-red-400">Topic: {{this.messages[0].room.roomName}}</h4>
+       
             <!-- messages appear here -->
-
+        <div 
+             v-for="message in messages" v-bind:key="message._id"
+             class="feed container"
+                
+        >
+            <p>{{message.content}}</p>
         </div>
 
         <div class="message input">
             <form @submit="sendMessage">
-                <textarea name="" id="" cols="30" rows="10"></textarea>
+                <textarea name="messageContent" id="" cols="30" rows="10"
+                v-model="currentMessage"
+                ></textarea>
                 <button>!</button>
             </form>
         </div>
@@ -28,16 +36,23 @@ export default {
     data(){
         return {
             currentMessage: "",
-            roomData: null,
             loading: true,
             error: null,
-            messages: null
-
+            messages: null, //all the data
+            user: JSON.parse(localStorage.getItem("user"))
+            
         }
     },
 
+    
+
     async mounted(){
 
+        socket.on("sendMessage", (response) => {
+            console.log('Received response from the server', response);
+        } )
+
+        
         // socket.emit("getRoom", this.roomId, (response)=> {
         //     console.log('Room response', response)
         // });
@@ -63,6 +78,8 @@ export default {
             this.loading = false;
         }
 
+        
+
 
     },
 
@@ -72,13 +89,17 @@ export default {
         sendMessage(e){
             e.preventDefault();
             console.log('Button Clicked');
-            socket.emit("hello", "world", (response)=> {
+            socket.emit("sendMessage", this.currentMessage, (response)=> {
                 console.log('Received', response)
             })
         }
-    }
+    },
+
+    
 
 }
+
+
 </script>
 
 <style>
