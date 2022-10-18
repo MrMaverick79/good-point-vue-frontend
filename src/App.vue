@@ -1,8 +1,9 @@
 <script>
 
+
 export default {
-  name: 'App',
-  
+    name: "App",
+    
 };//end 
 
 
@@ -28,6 +29,7 @@ export default {
     <div>
 
         <Login />
+        <Chatroom />
 
     </div>
 
