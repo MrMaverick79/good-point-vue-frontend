@@ -3,7 +3,28 @@
 
 export default {
     name: "App",
-    
+    data(){
+      return{
+        userPresent: this.checkUser(),
+        showLogin: this.isSignUp(),
+      }
+    },
+
+  
+
+    updated(){
+      this.showLogin = this.isSignUp()
+    },
+
+    methods: {
+      checkUser(){
+        return localStorage.getItem("user")
+      },
+
+      isSignUp(){
+        return this.$route.name === 'SignUp'
+      }
+    }
 };//end 
 
 
@@ -13,7 +34,7 @@ export default {
   <div id="app">
     <header>
       <h1>GOOD POINT!</h1>
-      <nav>
+      <nav v-if="userPresent">
         <ul>
           <li>
             <router-link to="/">Home</router-link>
@@ -27,10 +48,11 @@ export default {
     <router-view/> 
       
     <div>
-
-        <Login />
+      
+        <Login v-if="!showLogin" />
         <Chatroom />
 
+        
     </div>
 
  

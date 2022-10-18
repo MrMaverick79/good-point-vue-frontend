@@ -46,7 +46,7 @@ export default {
             error: null,
             messages: null, //all the data
             user: this.getUser(),
-            room: null
+            room:this.$route.params.id
             
             
         }
@@ -54,19 +54,7 @@ export default {
 
     async updated(){
         
-        try {
-            console.log('Attempting to get messages.');
-            const res = await axios.get(`${BASE_URL}/rooms/${this.$route.params.id}`)
-            console.log('Messages', res.data);
-            this.messages = res.data
-            this.room = this.messages[0].room
-            this.loading = false
-
-        } catch(err) {
-            console.log('There has been an error trying to find details for this room.', err);
-            this.error = err;
-            this.loading = false;
-        }
+        
     },
 
 
@@ -85,11 +73,15 @@ export default {
        
         
         try {
-            console.log('Attempting to get messages.');
+            console.log('Attempting to get room.');
             const res = await axios.get(`${BASE_URL}/rooms/${this.$route.params.id}`)
             console.log('Messages', res.data);
+            
             this.messages = res.data
-            this.room = this.messages[0].room
+            if (this.messages.length > 0){
+
+                this.room = this.messages[0].room
+            }
             this.loading = false
 
         } catch(err) {
@@ -109,20 +101,39 @@ export default {
 
        
 
-        sendMessage(e){
+        async sendMessage(e){
             e.preventDefault();
             
             console.log('Button Clicked');
             socket.emit("sendMessage", {
                 message: this.currentMessage, 
                 user: this.user._id,
-                room:  this.room._id
+                room:  this.room
 
             },(response)=> {
                
                 console.log('Received', response)
                 
             })
+
+            try {
+            console.log('Attempting to get messages.');
+            const res = await axios.get(`${BASE_URL}/rooms/${this.$route.params.id}`)
+            console.log('Messages', res.data);
+            if(this.messages.length > 0){
+                
+                this.messages = res.data
+                this.room = this.messages[0].room
+            }
+
+            this.loading = false
+
+        } catch(err) {
+            console.log('There has been an error trying to find details for this room.', err);
+            this.error = err;
+            this.loading = false;
+        }
+
             this.currentMessage = ""
         },
 

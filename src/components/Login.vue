@@ -18,7 +18,7 @@
             </label>
             <button><submit @click="handleSubmit">Log In</submit></button>
         </form>
-        <a href="/">No account? Sign up</a>
+        <a href="/signup">No account? Sign up</a>
 
     </div>
 
