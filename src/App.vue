@@ -6,14 +6,16 @@ export default {
     data(){
       return{
         userPresent: this.checkUser(),
-        showLogin: this.isSignUp(),
+        showLogin: true,
       }
     },
 
-  
+    mounted(){
+      this.isSignUp()
+    },
 
     updated(){
-      this.showLogin = this.isSignUp()
+      this.isSignUp()
     },
 
     methods: {
@@ -22,7 +24,9 @@ export default {
       },
 
       isSignUp(){
-        return this.$route.name === 'SignUp'
+        if (this.$route.name === 'SignUp'){
+          this.showLogin = false
+        }
       }
     }
 };//end 
@@ -47,17 +51,25 @@ export default {
     </header>   
     <router-view/> 
       
-    <div>
-      
-        <Login v-if="!showLogin" />
-        <Chatroom />
-
+    <div v-if="this.showLogin">
         
+        <Login  />
+                
     </div>
 
  
    
+    <footer class="h-50vh ">
 
+      <div class="github">
+        <a href="https://github.com/MrMaverick79/good-point-vue-frontend">
+        <i class="devicon-github-original-wordmark text-[3em]"></i></a>
+          
+
+      </div>
+
+
+    </footer>
     
     
   </div>

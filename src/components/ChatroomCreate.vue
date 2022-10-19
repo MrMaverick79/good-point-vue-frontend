@@ -1,5 +1,6 @@
 <template>
         <div class="create container">
+            <h3>Create a New Room</h3>
             <form action="">
                 <label for="">
                     Topic:

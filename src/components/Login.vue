@@ -7,16 +7,26 @@
          <a @click="logOut">Logout</a>
     </div>
     <div v-if="!this.loggedIn">
-        <form action="">
+
+        <div v-if="this.error">
+            <p>Please check your username and password and try again</p>
+
+        </div>
+
+        <form action="" class="p-5">
             <label for="">
-                Email:
-                <input type="text" v-model="email"/>
+            
+                <input type="text" v-model="email" placeholder="Email"
+                class="m-2 p-2"
+                 />
             </label>
-            <label for="">
-                Password:
-                <input type="text" v-model="password"/>
+            <label>
+               
+                <input type="password" v-model="password" placeholder="Password"
+                class="m-2 p-2"
+                />
             </label>
-            <button><submit @click="handleSubmit">Log In</submit></button>
+            <button class="bg-purple-700"><submit @click="handleSubmit">Log In</submit></button>
         </form>
         <a href="/signup">No account? Sign up</a>
 
@@ -35,7 +45,8 @@ export default {
             email: null,
             password: null,
             result: null, 
-            loggedIn: false
+            loggedIn: false,
+            error: null
         }
     },
 
@@ -74,15 +85,14 @@ export default {
 
             } catch (err){
                 console.log('Error logging in', err);
+                this.error = true
             }
 
-            
-            
+  
            
         },
    
  
-  
  
 
         logOut(){

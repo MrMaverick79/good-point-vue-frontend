@@ -1,22 +1,32 @@
 <template>
   <div class="selecton container">
-    <h1 class="text-red-400">Get a Room</h1>
-    <p>Choose from one of your existing rooms or create a new one</p>
+    <div class="lobby heading">
+
+      <h3 class="text-red-400">Get a Room</h3>
+      <p>Choose from one of your existing rooms or create a new one</p>
+      <i @click="toggleCreate" class="ri-add-box-fill"></i>
+
+    </div>
+
+    <div class="add container" v-if="showCreate">
+        <ChatroomCreate  />
+    </div>
+
       <div 
         v-for="room in rooms" v-bind:key="room._id"
-        class="results"
-        @click="selectRoom(room._id)"
+        class="results "
+      @click="selectRoom(room._id)"
       >
         <ul>
-          <li>
+          <li class="p-5 bg-indigo-900 m-5 w-[25vw]">
             <router-link :to="`/rooms/${room._id}`">{{room.roomName}}</router-link>
           </li>
+
         </ul>
+       
       </div>
     
-      <div class="add container" v-if="showCreate">
-        <ChatroomCreate  />
-      </div>
+      
 
     </div>
 
@@ -33,13 +43,7 @@ export default {
             showCreate: true
         };
     },
-    // socket.emit("getRoom", this.roomId, (response)=> {
-    //     console.log('Room response', response)
-    // });
-    // socket.on("roomResponse", (msg) => {
-    //     log("roomResponse received from the server", msg)
-    //     this.roomData = data
-    // });
+   
     async mounted() {
         try {
             console.log("Attempting to get");
@@ -77,12 +81,32 @@ export default {
                 name: "Chatroom",
                 params: { roomId: id }
             });
+        },
+
+        toggleCreate(){
+          if(this.showCreate === true){
+            this.showCreate = false
+          } else{
+            this.showCreate = true
+          }
         }
     },
     components: { ChatroomCreate }
 }
 </script>
 
-<style>
+<style scoped>
+
+.results{
+  display: inline-flex;
+  flex-wrap: wrap;
+  
+}
+
+.results a{
+  color: #fff
+}
+  
+
 
 </style>
