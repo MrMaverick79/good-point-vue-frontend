@@ -44,26 +44,27 @@ export default {
             <router-link to="/">Home</router-link>
           </li>
           <li>
-            <router-link to="/rooms">Make your point</router-link>
+            <router-link to="/rooms">Rooms</router-link>
           </li>   
         </ul>
       </nav>
-    </header>   
-    <router-view/> 
-      
-    <div v-if="this.showLogin">
+      <div v-if="this.showLogin">
         
         <Login  />
                 
     </div>
+    </header>   
+    <router-view/> 
+      
+    
 
  
    
-    <footer class="h-50vh ">
+    <footer>
 
-      <div class="github">
+      <div class="github h-50">
         <a href="https://github.com/MrMaverick79/good-point-vue-frontend">
-        <i class="devicon-github-original-wordmark text-[3em]"></i></a>
+        <i class="devicon-github-original-wordmark text-[3em] pt-30"></i></a>
           
 
       </div>
@@ -78,5 +79,24 @@ export default {
 
 
 <style scoped>
- 
+ footer{
+  height: 25vh;
+  display: flex;
+  justify-content: center;
+  align-items: end
+
+ }
+
+ header ul{  
+   display: inline-flex;
+   width: 50vw;
+   justify-content: center;
+
+ }
+
+ header li{
+   padding: 2%;
+ }
+
+
 </style>

@@ -40,7 +40,7 @@ export default {
     data() {
         return {
             rooms: [],
-            showCreate: true
+            showCreate: false
         };
     },
    
