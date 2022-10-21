@@ -1,21 +1,24 @@
 <template>
     <!-- Message feed and send message component -->
     <div class="chatroom container">
-        <h3>Welcome, {{this.user.name}} </h3>
-        <h4 class="text-red-400">We are discussing: {{this.topic }}</h4>
+
+        <div class="particpant">
+            <h3>Chatting wi, {{this.user.name}} </h3>
+        </div>
+        <h4 class="text-red-400">{{this.topic }}</h4>
         <div class="message container w-[75vw] h-[75vh] overflow-scroll flex-column ">
                 <!-- messages appear here -->
             <div  
                 v-for="message in messages" :key="message._id"
                 class="feed container "       
             >
-                <div v-if="message.sender._id === this.user._id" class="bg-blue-400 w-[50%] p-5 m-5 justify-start text-left rounded">
+                <div v-if="message.sender._id === this.user._id" class="bg-blue-400 w-[50%] p-5 m-5 justify-start text-left rounded-lg">
                     <p 
                     class="text-red-100bg-blue-400 w-full border-red text-align-left">{{message.content}}</p>
                 </div>
-                <div v-else class=" text-black w-full p-5 m-5 nonUser rounded">
+                <div v-else class=" text-gray-100 w-full p-5 m-5 nonUser g">
                     <img src="" alt="" srcset="">
-                    <p class="bg-white w-[50%] p-5"
+                    <p class="bg-purple-400  w-[50%] p-5 rounded-l"
                     >{{message.content}}</p>
                     
                   
@@ -25,16 +28,17 @@
 
             </div>
         </div>
-        <div class="message input pt-10 flex-column justify-center ">
-            <form @submit="sendMessage">
+        <div class="message input pt-10 ">
+            <form @submit="sendMessage" class="inline">
                 <textarea name="messageContent" 
-                placeholder="Express yourself here"
-                id="" cols="30" rows="10"
+                placeholder="Write a message..."
+                id="" cols="30" rows="2"
                 v-model="currentMessage"
-                ></textarea>
+                class="w-[80%]"
+                ></textarea><i class="ri-emotion-line text-[2em] ml-4 "></i>
                
             </form>
-            <button class="bg-purple-700 w-[25vw]">Go</button>
+            <button class="bg-purple-700 w-[25vw] mt-3" @click="sendMessage">Go</button>
         </div>
 
 
@@ -43,7 +47,7 @@
 
 <script>
 import { socket } from '../socket';
-const BASE_URL = "http://localhost:3000"
+import BASE_URL from '../url'
 import axios from 'axios';
 
 
@@ -57,8 +61,11 @@ export default {
             loading: true,
             error: null,
             messages: null, //socket
+            //current user
             user: this.getUser(),
+            //Todo: this is being overwriten later. Might need a roomId and roomdetails
             room:this.$route.params.id,
+            //This might not be needed 
             topic: "" //retrieved by socket
         }
     },
@@ -81,9 +88,10 @@ export default {
         socket.on("roomResponse", (result)=> {
             console.log('roomResponse received from the server',result);
             this.topic = result.roomName
+            this.room = result
         })
 
-        //Grab the messages(replacing the previous axios request)
+        //Grab the messages(using sockets instead of an axios request)
         //Ask for the room details
         socket.emit( "getMessages", this.$route.params.id);
 
@@ -132,7 +140,7 @@ export default {
             if(this.messages.length > 0){
                 
                 this.messages = res.data
-                this.room = this.messages[0].room
+                // this.room = this.messages[0].room
             }
 
             this.loading = false

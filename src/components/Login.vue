@@ -17,16 +17,16 @@
             <label for="">
             
                 <input type="text" v-model="email" placeholder="Email"
-                class="m-2 p-2"
+                class="m-2 p-2 border-2 border-indigo-500"
                  />
             </label>
             <label>
                
                 <input type="password" v-model="password" placeholder="Password"
-                class="m-2 p-2"
+                class="m-2 p-2 border-2 border-indigo-500"
                 />
             </label>
-            <button class="bg-purple-700"><submit @click="handleSubmit">Log In</submit></button>
+            <button class="submit bg-purple-700 hover:bg-purple-500 hover:text-black text-white" @click="handleSubmit">Log In</button>
         </form>
         <a href="/signup">No account? Sign up</a>
 
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-const BASE_URL = 'http://localhost:3000';
+import BASE_URL from '../url'
 import axios from 'axios'
 export default {
     name: 'Login',
@@ -126,6 +126,6 @@ export default {
 
 </script>
 
-<style>
-
+<style scoped>
+   
 </style>

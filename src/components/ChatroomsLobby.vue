@@ -35,6 +35,8 @@
 <script>
 import axios from 'axios';
 import ChatroomCreate from './ChatroomCreate.vue';
+import BASE_URL from '../url.js';
+
 export default {
     name: "ChatroomsLobby",
     data() {
@@ -47,7 +49,7 @@ export default {
     async mounted() {
         try {
             console.log("Attempting to get");
-            const res = await axios.get(`http://localhost:3000/rooms`);
+            const res = await axios.get(BASE_URL+'/rooms');
             console.log("Room Data", res.data);
             this.rooms = res.data;
             this.loading = false;
@@ -61,7 +63,7 @@ export default {
 
     async updated(){
       try {
-            const res = await axios.get(`http://localhost:3000/rooms`);
+            const res = await axios.get(BASE_URL+ '/rooms');
             this.rooms = res.data;
             this.loading = false;
         }

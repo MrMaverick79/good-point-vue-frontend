@@ -18,7 +18,7 @@
 </template>
 
 <script>
-const BASE_URL = 'http://localhost:3000';
+import BASE_URL from '../url'
 import axios from 'axios'
 export default {
     name: 'ChatroomCreate',
