@@ -4,7 +4,7 @@
 
       <h3 class="text-red-400 text-[2em] m-8 ">Get a Room</h3>
       <p>Choose from one of your existing rooms or create a new one</p>
-      <i @click="toggleCreate" class="ri-add-box-fill"></i>
+      <i @click="toggleCreate" class="ri-add-box-fill text-[1.5em]"></i>
 
     </div>
 

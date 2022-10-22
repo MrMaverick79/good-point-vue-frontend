@@ -6,11 +6,11 @@
 
         <div class="participant inline-flex  w-full justify-end" v-if="this.otherUser">
             
-            <img :src="this.otherUser.thumbnailUrl" alt="user profile image" class="h-16 rounded-full"/>
+            <img :src="this.otherUser.thumbnailUrl" alt="user profile image" class="h-12 rounded-full border-purple-300 border-2"/>
             <h3 class="text-center m-5 font-bold"> {{this.otherUser.name}} </h3>
         </div>
         
-        <div class="message container w-[75vw] h-[75vh] overflow-scroll flex-column ">
+        <div class="message container w-[70vw] h-[75vh] overflow-y-scroll flex-column overflow-x-hidden">
                 <!-- messages appear here -->
             <div  
                 v-for="message in messages" :key="message._id"
@@ -20,9 +20,9 @@
                     <p 
                     class="text-red-100bg-blue-400 w-full border-red text-align-left">{{message.content}}</p>
                 </div>
-                <div v-else class=" text-gray-100 w-full p-5 m-5 nonUser g">
+                <div v-else class=" text-gray-100 w-full p-5 m-5 nonUser text-right rounded-lg">
                     <img src="" alt="" srcset="">
-                    <p class="bg-purple-400  w-[50%] p-5 rounded-l"
+                    <p class="bg-purple-400  w-[50%] p-5 rounded-lg"
                     >{{message.content}}</p>
                     
                   
@@ -51,8 +51,6 @@
 
 <script>
 import { socket } from '../socket';
-import BASE_URL from '../url'
-import axios from 'axios';
 
 
 
@@ -68,7 +66,6 @@ export default {
             //current user
             user: this.getUser(),
             otherUser: "",
-            //Todo: this is being overwriten later. Might need a roomId and roomdetails
             room:this.$route.params.id,
             roomDetails: null,
             //This might not be needed 
@@ -78,7 +75,7 @@ export default {
 
     async updated(){
         this.getOtherUser();
-        
+        socket.emit( "getMessages", this.$route.params.id)
     },
 
 
@@ -86,30 +83,28 @@ export default {
 
     async mounted(){
 
-        //Ask for the room details
+        //Ask for the room details using the url
         socket.emit( "getRoom", this.$route.params.id) 
        
         //The response from the server with the room details 
-        //TODO: Might be better to replace this with a message request, as it gets everytingh.
         socket.on("roomResponse", (result)=> {
-            console.log('roomResponse received from the server',result);
+            // console.log('roomResponse received from the server',result);
             this.topic = result.roomName
             this.roomDetails = result
-            this.getOtherUser()
+            this.getOtherUser() //grab the other users details for the image and name
         })
 
         //Grab the messages(using sockets instead of an axios request)
-        //Ask for the room details
         socket.emit( "getMessages", this.$route.params.id);
 
         //The messages on response from the server
         socket.on("messageResults", (result)=> {
-            console.log('messageResults received from the server',result);
+            // console.log('messageResults received from the server',result);
             this.messages = result
         }); 
 
         socket.on("sendMessage", (response) => {
-            console.log('Received response from the server', response);
+            // console.log('Received response from the server', response);
             this.messages = [response,...this.messages];
            
         })
@@ -119,15 +114,10 @@ export default {
 
     },
 
-    
-
     methods: {
-
-       
-
+        //Post a message to the backend
         async sendMessage(e){
             e.preventDefault();
-            
             console.log('Button Clicked');
             socket.emit("sendMessage", {
                 message: this.currentMessage, 
@@ -135,35 +125,13 @@ export default {
                 room: this.room
 
             },(response)=> {
-               
                 console.log('Received', response)
-                
             })
-
-            try {
-            console.log('Attempting to get messages.');
-            const res = await axios.get(`${BASE_URL}/rooms/${this.$route.params.id}`)
-            console.log('Messages', res.data);
-            if(this.messages.length > 0){
-                
-                this.messages = res.data
-                // this.room = this.messages[0].room
-            }
-
-            this.loading = false
-
-        } catch(err) {
-            console.log('There has been an error trying to find details for this room.', err);
-            this.error = err;
-            this.loading = false;
-        }
-
-            this.currentMessage = ""
+            this.currentMessage = "" //clear the input field
         },
 
         getUser(){
                 const allUser = JSON.parse(localStorage.getItem("user"))
-                console.log('coming from getUser', allUser.user);
                 return allUser.user
             },
 

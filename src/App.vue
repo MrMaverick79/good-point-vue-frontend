@@ -62,7 +62,7 @@ export default {
 
 <template>
   <div id="app">
-    <h1 class="w-[100%]">GOOD POINT!</h1>
+    <h1 class="w-[100%] mb-4">GOOD POINT</h1>
     <header >
       <div v-if="this.showLogin" class="p-2 flex flex-column w-full">
           
