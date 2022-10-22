@@ -14,10 +14,22 @@
 - Socket.io
 - Express
 - Tailwind CSS
+- Vite
 
 **Overview**
 
-*Good Point!* is a demonstration full-stack project that uses socket.io to create chat rooms. Users select a topic to debate and use rooms to discuss these topics with other users.
+*Good Point!* is a demonstration full-stack project that uses socket.io to create chat rooms. Users can log in, add and create chat rooms, and discuss topic with others.
+
+## Future Fixes
+
+- Remove all axios requests
+- Tutorial for using socket IO
+- Refactor 
+
+
+## Known bugs
+
+- [ ] Refresh needed after loggin in as another user.
 
 
 

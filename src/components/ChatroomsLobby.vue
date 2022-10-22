@@ -2,7 +2,7 @@
   <div class="selecton container">
     <div class="lobby heading">
 
-      <h3 class="text-red-400">Get a Room</h3>
+      <h3 class="text-red-400 text-[2em] m-8 ">Get a Room</h3>
       <p>Choose from one of your existing rooms or create a new one</p>
       <i @click="toggleCreate" class="ri-add-box-fill"></i>
 

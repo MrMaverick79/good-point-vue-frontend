@@ -1,11 +1,15 @@
 <template>
     <!-- Message feed and send message component -->
     <div class="chatroom container">
+        <h2 class="text-red-400 text-[2em] m-8 ">{{this.topic }}</h2>
 
-        <div class="particpant">
-            <h3>Chatting wi, {{this.user.name}} </h3>
+
+        <div class="participant inline-flex  w-full justify-end" v-if="this.otherUser">
+            
+            <img :src="this.otherUser.thumbnailUrl" alt="user profile image" class="h-16 rounded-full"/>
+            <h3 class="text-center m-5 font-bold"> {{this.otherUser.name}} </h3>
         </div>
-        <h4 class="text-red-400">{{this.topic }}</h4>
+        
         <div class="message container w-[75vw] h-[75vh] overflow-scroll flex-column ">
                 <!-- messages appear here -->
             <div  
@@ -23,7 +27,7 @@
                     
                   
                 </div>
-                <p class="text-white">Posted by {{message.sender.name}}</p>
+                <!-- <p class="text-white">Posted by {{message.sender.name}}</p> -->
 
 
             </div>
@@ -63,15 +67,17 @@ export default {
             messages: null, //socket
             //current user
             user: this.getUser(),
+            otherUser: "",
             //Todo: this is being overwriten later. Might need a roomId and roomdetails
             room:this.$route.params.id,
+            roomDetails: null,
             //This might not be needed 
             topic: "" //retrieved by socket
         }
     },
 
     async updated(){
-        //TODO: socket request to fetch messages
+        this.getOtherUser();
         
     },
 
@@ -88,7 +94,8 @@ export default {
         socket.on("roomResponse", (result)=> {
             console.log('roomResponse received from the server',result);
             this.topic = result.roomName
-            this.room = result
+            this.roomDetails = result
+            this.getOtherUser()
         })
 
         //Grab the messages(using sockets instead of an axios request)
@@ -107,7 +114,7 @@ export default {
            
         })
 
-        
+       
 
 
     },
@@ -125,7 +132,7 @@ export default {
             socket.emit("sendMessage", {
                 message: this.currentMessage, 
                 user: this.user._id,
-                room:  this.room
+                room: this.room
 
             },(response)=> {
                
@@ -158,7 +165,19 @@ export default {
                 const allUser = JSON.parse(localStorage.getItem("user"))
                 console.log('coming from getUser', allUser.user);
                 return allUser.user
-            }
+            },
+
+        getOtherUser(){
+            const users = this.roomDetails.users
+             for (let i = 0; i < users.length; i++) {
+                if (users[i].name != this.user.name){
+                    this.otherUser = users[i]
+                    
+                }
+
+                
+             }
+        }
     },
 
     

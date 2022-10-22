@@ -1,10 +1,16 @@
 <template>
   
     <div class="form container" >  
-        <div class="form container"
+        <div class="user container w-full inline-flex"
         v-if="this.loggedIn"
     >  
-         <a @click="logOut">Logout</a>
+        
+            <img :src="$attrs.user.url" alt="user profile picture" class="h-16 rounded-full"/>
+        <ul> 
+            <li>Welcome, {{$attrs.user.name}}</li>
+            <li> <a @click="logOut">Logout</a></li>
+        </ul>
+       
     </div>
     <div v-if="!this.loggedIn">
 
@@ -38,13 +44,14 @@
 <script>
 import BASE_URL from '../url'
 import axios from 'axios'
+import {socket } from '../socket'
 export default {
     name: 'Login',
     data(){
         return{
             email: null,
             password: null,
-            result: null, 
+            result: "", 
             loggedIn: false,
             error: null
         }
@@ -52,10 +59,14 @@ export default {
 
     mounted(){
         this.checkUser();
+
+       
     },
 
     updated(){
         this.checkUser();
+
+        
     },
 
     methods:{
@@ -76,6 +87,7 @@ export default {
                 })
 
                 this.result = res.data
+                
 
                 if(res.data.token){
                     localStorage.setItem("user", JSON.stringify(res.data));
@@ -115,7 +127,9 @@ export default {
 
         getUser(){
             return localStorage.getItem('user')
-        }
+        },
+
+       
       
   }
 

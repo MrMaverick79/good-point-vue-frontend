@@ -1,4 +1,5 @@
 <script>
+import { socket } from './socket';
 
 
 export default {
@@ -7,28 +8,53 @@ export default {
       return{
         userPresent: this.checkUser(),
         showLogin: true,
+        user: ""
       }
     },
 
     mounted(){
       this.isSignUp()
+
+      if(this.userPresent){
+            this.getUser()
+        }
+
+        socket.on("foundUser", response=>{
+                console.log('We received a reponse from the server', response);
+                this.user= response
+            })
+
     },
 
     updated(){
       this.isSignUp()
+      
+    
+
     },
 
     methods: {
       checkUser(){
-        return localStorage.getItem("user")
+        const result =  JSON.parse(localStorage.getItem("user"))
+        return result
       },
 
       isSignUp(){
         if (this.$route.name === 'SignUp'){
           this.showLogin = false
         }
-      }
-    }
+      },
+
+      getUser(){ //receive the details for the current user (name and url only)
+        socket.emit("getUser", {
+                id: this.userPresent.user._id
+
+        }, (response)=>{
+              console.log('Received this response from get user', response);
+
+        })
+      }  //getUser
+    } //methods
 };//end 
 
 
@@ -36,23 +62,29 @@ export default {
 
 <template>
   <div id="app">
-    <header>
-      <h1>GOOD POINT!</h1>
-      <nav v-if="userPresent">
-        <ul>
-          <li>
-            <router-link to="/">Home</router-link>
-          </li>
-          <li>
-            <router-link to="/rooms">Rooms</router-link>
-          </li>   
-        </ul>
-      </nav>
-      <div v-if="this.showLogin">
+    <h1 class="w-[100%]">GOOD POINT!</h1>
+    <header >
+      <div v-if="this.showLogin" class="p-2 flex flex-column w-full">
+          
+          <Login :user="this.user"/>
+         
+        </div>
+     
+      
+      <div class="header container inline-flex">
         
-        <Login  />
-                
-    </div>
+        <nav v-if="userPresent" class="mt-3 justify-center flex w-full">
+          <ul>
+            <li>
+              <router-link to="/" class="p-8 text-lg">Home</router-link>
+            </li>
+            <li>
+              <router-link to="/rooms" class="text-lg">Rooms</router-link>
+            </li>   
+          </ul>
+        </nav>
+      </div>
+      
     </header>   
     <router-view/> 
       
