@@ -75,7 +75,7 @@ export default {
 
     async updated(){
         this.getOtherUser();
-        socket.emit( "getMessages", this.$route.params.id)
+        
     },
 
 
@@ -95,12 +95,13 @@ export default {
         })
 
         //Grab the messages(using sockets instead of an axios request)
-        socket.emit( "getMessages", this.$route.params.id);
+        
 
         //The messages on response from the server
         socket.on("messageResults", (result)=> {
             // console.log('messageResults received from the server',result);
             this.messages = result
+           
         }); 
 
         socket.on("sendMessage", (response) => {
@@ -128,6 +129,7 @@ export default {
                 console.log('Received', response)
             })
             this.currentMessage = "" //clear the input field
+            socket.emit( "getMessages", this.$route.params.id)
         },
 
         getUser(){
@@ -136,15 +138,19 @@ export default {
             },
 
         getOtherUser(){
-            const users = this.roomDetails.users
-             for (let i = 0; i < users.length; i++) {
-                if (users[i].name != this.user.name){
-                    this.otherUser = users[i]
-                    
+
+            if(this.roomDetails){
+
+                const users = this.roomDetails.users
+                 for (let i = 0; i < users.length; i++) {
+                    if (users[i].name != this.user.name){
+                        this.otherUser = users[i]
+                        
+                    }
                 }
 
                 
-             }
+            }
         }
     },
 

@@ -1,15 +1,17 @@
 <template>
-        <div class="create container p-3  border-2 border-red-400 ">
+        <div class="create p-3 flex flex-col content-center align-center justify-center">
             <h3 class="text-lg">Create a New Room</h3>
-            <form class="h-[15em] w-[20%] border-2 border-white-200 flex flex-col">
-                <label for="">
-                    <input type="text" v-model="this.topic" placeholder="Give this room a name...">
-                <label for="">
+            <form class="h-[15em] w-[10em]  self-center text-left mt-4 p-2">              <label for="">
+                    <input type="text" v-model="this.topic" placeholder="Give this room a name..."
+                    class="p-2 mb-2"
+                    >
+                <label class="text-xs pt-4">
                     Add someone to this room
                     <select v-model="selected" >
                         <option disabled value="">Please select one</option>
                         <template v-for="user in listOfUsers" v-bind:key="user._id">
-                            <option v-if="user._id!=this.user">{{user.name}}</option>
+                        
+                            <option v-if="user._id!=this.user" v-bind:value="user._id"> {{user.name}}</option>
 
                         </template>
                        
@@ -59,22 +61,23 @@ export default {
             this.createRoom()
            
         },
+
         async createRoom() {
     
             try{
                 const res = await axios.post(BASE_URL + '/rooms/new', {
                     topic: this.topic,
-                    users: this.user
+                    users: [this.user, this.selected]
                 })
 
                 this.result = res.data
-                console.log(res.data);
+                console.log('Here is the new room:',res.data);
     
             } catch(err){
                 console.log('There has been an error creating that room', err);
             }
 
-            this.$router.push('/rooms/')
+            this.$router.push(`/rooms/${this.result._id}`)
         },
 
         async grabUsers() {
