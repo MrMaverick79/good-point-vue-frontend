@@ -38,7 +38,7 @@
                 placeholder="Write a message..."
                 id="" cols="30" rows="2"
                 v-model="currentMessage"
-                class="w-[80%]"
+                class="w-[80%] border-2 border-indigo-500"
                 ></textarea><i class="ri-emotion-line text-[2em] ml-4 "></i>
                
             </form>
@@ -85,6 +85,7 @@ export default {
 
         //Ask for the room details using the url
         socket.emit( "getRoom", this.$route.params.id) 
+        socket.emit( "getMessages", this.$route.params.id)
        
         //The response from the server with the room details 
         socket.on("roomResponse", (result)=> {
@@ -119,14 +120,13 @@ export default {
         //Post a message to the backend
         async sendMessage(e){
             e.preventDefault();
-            console.log('Button Clicked');
             socket.emit("sendMessage", {
                 message: this.currentMessage, 
                 user: this.user._id,
                 room: this.room
 
             },(response)=> {
-                console.log('Received', response)
+                // console.log('Received', response)
             })
             this.currentMessage = "" //clear the input field
             socket.emit( "getMessages", this.$route.params.id)

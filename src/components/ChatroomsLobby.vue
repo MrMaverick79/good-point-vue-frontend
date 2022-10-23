@@ -42,15 +42,20 @@ export default {
     data() {
         return {
             rooms: [],
-            showCreate: false
+            showCreate: false,
+            token: JSON.parse(localStorage.getItem("user"))
         };
     },
    
     async mounted() {
         try {
-            console.log("Attempting to get");
-            const res = await axios.get(BASE_URL+'/rooms');
-            console.log("Room Data", res.data);
+          
+            const res = await axios.get(BASE_URL+'/rooms', {
+              headers: {
+                Authorization: `Bearer ${this.token.token}` //the token is a variable which holds the token
+              }
+            });
+          
             this.rooms = res.data;
             this.loading = false;
         }
@@ -63,7 +68,12 @@ export default {
 
     async updated(){
       try {
-            const res = await axios.get(BASE_URL+ '/rooms');
+            const res = await axios.get(BASE_URL+ '/rooms',{ 
+              headers: {
+                Authorization: `Bearer ${this.token.token}` //the token is a variable which holds the token
+              }
+            })
+
             this.rooms = res.data;
             this.loading = false;
         }
@@ -78,7 +88,7 @@ export default {
 
     methods: {
         selectRoom(id) {
-            console.log(`Here ${id}`);
+            
             this.$router.push({
                 name: "Chatroom",
                 params: { roomId: id }

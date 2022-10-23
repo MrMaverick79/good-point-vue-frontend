@@ -1,17 +1,17 @@
 <template>
-    <div class="signup">
+    <div class="signup flex flex-col">
         <h3>Create an account</h3>
-        <form action="">
-            <label for="">Username:
-                <input type="text" v-model="name">
-            </label>
-            <label for="">Email:
-                <input type="text" v-model="email">
-            </label>
-            <label for="">Password:
-                <input type="password" v-model="password">
-            </label>
-            <button @click="handleSubmit">Create my account</button>
+        <form class="flex flex-col">
+            
+                <input type="text" v-model="name" class="m-2 p-2 border-2 border-indigo-500" placeholder="Username*">
+          
+           
+                <input type="text" v-model="email" class="m-2 p-2 border-2 border-indigo-500" placeholder="Email*">
+            
+           
+                <input type="password" v-model="password" class="m-2 p-2 border-2 border-indigo-500" placeholder="password*">
+            
+            <button @click="handleSubmit" class="submit bg-purple-700 hover:bg-purple-500 hover:text-black text-white">Create my account</button>
 
         </form>
 

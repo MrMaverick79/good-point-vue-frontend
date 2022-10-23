@@ -1,14 +1,14 @@
 <template>
   
     <div class="form container" >  
-        <div class="user container w-full inline-flex"
+        <div class="user container w-full inline-flex justify-center"
         v-if="this.loggedIn"
     >  
         
             <img :src="$attrs.user.url" alt="user profile picture" class="h-12 rounded-full border-2 border-blue-100"/>
         <ul class="m-2 "> 
             <li>Welcome, {{$attrs.user.name}}</li>
-            <li> <a @click="logOut">Logout</a></li>
+            <li> <a @click="logOut" class="cursor-pointer">Logout</a></li>
         </ul>
        
     </div>
@@ -108,8 +108,7 @@ export default {
  
 
         logOut(){
-              console.log('Clicked');
-              
+                            
               localStorage.removeItem("user");
               this.loggedIn = false;
               this.$router.push('/')

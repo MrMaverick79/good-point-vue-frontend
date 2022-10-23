@@ -13,21 +13,33 @@ export default {
     },
 
     mounted(){
-      this.isSignUp()
+      
+      if(!this.isSignUp() && !this.checkUser()){
+          this.showLogin = true;
+      }
+      // if(this.$route.name != 'SignUp' && !this.checkUser()){
+      //   this.showLogin=true
+      // }
 
       if(this.userPresent){
             this.getUser()
         }
 
         socket.on("foundUser", response=>{
-                console.log('We received a reponse from the server', response);
+                // console.log('We received a reponse from the server', response);
                 this.user= response
             })
 
     },
 
     updated(){
-      this.isSignUp()
+      if(!this.isSignUp() && !this.checkUser()){
+          this.showLogin = true;
+      }
+      
+      // if(this.$route.name != 'SignUp' && !this.checkUser()){
+      //   this.showLogin=true
+      // }
       
     
 
@@ -41,7 +53,7 @@ export default {
 
       isSignUp(){
         if (this.$route.name === 'SignUp'){
-          this.showLogin = false
+          return true
         }
       },
 
@@ -50,7 +62,7 @@ export default {
                 id: this.userPresent.user._id
 
         }, (response)=>{
-              console.log('Received this response from get user', response);
+              // console.log('Received this response from get user', response);
 
         })
       }  //getUser
@@ -64,7 +76,7 @@ export default {
   <div id="app">
     <h1 class="w-[100%] mb-4">GOOD POINT</h1>
     <header >
-      <div v-if="this.showLogin" class="p-2 flex flex-column w-full">
+      <div v-if="this.showLogin && this.$route.name!='SignUp'" class="p-2 flex flex-column w-full">
           
           <Login :user="this.user"/>
          
@@ -73,12 +85,12 @@ export default {
       
       <div class="header container inline-flex">
         
-        <nav v-if="userPresent" class="mt-3 justify-center flex w-full">
+        <nav  class="mt-3 justify-center flex w-full">
           <ul>
             <li>
               <router-link to="/" class="p-8 text-lg">Home</router-link>
             </li>
-            <li>
+            <li v-if="userPresent">
               <router-link to="/rooms" class="text-lg">Rooms</router-link>
             </li>   
           </ul>
