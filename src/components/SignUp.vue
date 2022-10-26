@@ -9,7 +9,7 @@
                 <input type="text" v-model="email" class="m-2 p-2 border-2 border-indigo-500" placeholder="Email*">
             
            
-                <input type="password" v-model="password" class="m-2 p-2 border-2 border-indigo-500" placeholder="password*">
+                <input type="password" v-model="password" class="m-2 p-2 border-2 border-indigo-500" placeholder="Password*">
             
             <button @click="handleSubmit" class="submit bg-purple-700 hover:bg-purple-500 hover:text-black text-white">Create my account</button>
 
