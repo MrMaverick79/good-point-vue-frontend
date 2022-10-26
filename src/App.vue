@@ -36,6 +36,11 @@ export default {
       if(!this.isSignUp() && !this.checkUser()){
           this.showLogin = true;
       }
+
+      if(this.userPresent){
+            this.getUser()
+        }
+
       
       // if(this.$route.name != 'SignUp' && !this.checkUser()){
       //   this.showLogin=true
