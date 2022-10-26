@@ -5,7 +5,7 @@
         v-if="this.loggedIn"
     >  
         
-            <img :src="$attrs.user.url" alt="user profile picture" class="h-12 rounded-full border-2 border-blue-100"/>
+            <img :src="this.image.url" alt="user profile picture" class="h-12 rounded-full border-2 border-blue-100"/>
         <ul class="m-2 "> 
             <li>Welcome, {{$attrs.user.name}}</li>
             <li> <a @click="logOut" class="cursor-pointer">Logout</a></li>
@@ -53,6 +53,7 @@ export default {
             result: "", 
             loggedIn: false,
             error: null, 
+            image: this.$attrs.user
             
         }
     },

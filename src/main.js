@@ -4,7 +4,7 @@ import App from './App.vue'
 import  {router} from './router'
 import { socket } from './socket'
 import axios from 'axios'
-//TODO: Create BASE_URL
+
 
 //Components
 import Login from './components/Login.vue'
