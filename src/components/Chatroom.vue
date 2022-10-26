@@ -95,8 +95,7 @@ export default {
             this.getOtherUser() //grab the other users details for the image and name
         })
 
-        //Grab the messages(using sockets instead of an axios request)
-        
+         
 
         //The messages on response from the server
         socket.on("messageResults", (result)=> {
