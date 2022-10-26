@@ -21,6 +21,7 @@
 
 <script>
 import axios from 'axios'
+import BASE_URL from '../url'
 
 export default {
     name: 'SignUp',
@@ -39,7 +40,7 @@ export default {
 
         async createUser(){
             try{
-                const res = await axios.post('http://localhost:3000/user/create', {
+                const res = await axios.post(`${BASE_URL}/user/create`, {
                     name: this.name,
                     password: this.password,
                     email: this.email

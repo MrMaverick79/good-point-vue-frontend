@@ -27,6 +27,12 @@
  - Send messages using websockets
  - Responds to light/dark mode preferences from the browser
 
+ ## How to use Socket.io- a basic introduction
+
+ This was the first time that I had used Socket.io in one of my projects, so I'm including a really simple tutorial here to get started. It's not meant to be a thorough how to, but if you follow these steps, you should be able to get your front end and back ends speaking to each other via sockets.
+
+ 
+
 ## Future Fixes
 
 - Remove all axios requests
