@@ -2,7 +2,7 @@
 
 **Author: Brendan Tuckerman**
 
-[Live Demo]()
+[Live Demo](https://mrmaverick79.github.io/good-point-vue-frontend/)
 
 test-email: test1@test.com
 password: chicken
@@ -48,7 +48,7 @@ We need a few packages to start, so initialize the project with
 
 `npm i express mongodb mongoose nodemon cors` 
 
-This allows us to use mongodb with mongoose, express,  nodemon, which is a simple monitoring package that keeps an eye on our server, and cors to help us avoid Cors errors--more on that later!
+This allows us to use mongodb with mongoose, express,  nodemon  ( a simple monitoring package that keeps an eye on our server) and cors to help us avoid Cors errors--more on that later!
 
 Then we are going to need to get socket.io, which will send our messages via websockets
 
