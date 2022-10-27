@@ -98,7 +98,7 @@ export default {
         <nav  class="mt-3 justify-center flex w-full">
           <ul>
             <li>
-              <router-link to="//good-point-vue-frontend/" class="p-8 text-lg">Home</router-link>
+              <router-link to="/good-point-vue-frontend/" class="p-8 text-lg">Home</router-link>
             </li>
             <li v-if="userPresent">
               <router-link to="/good-point-vue-frontend/rooms/" class="text-lg">Rooms</router-link>

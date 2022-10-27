@@ -19,7 +19,7 @@
       >
         <ul>
           <li class="p-5 bg-indigo-900 m-5 w-[25vw]">
-            <router-link :to="`/rooms/${room._id}`">{{room.roomName}}</router-link>
+            <router-link :to="`/good-point-vue-frontend/rooms/${room._id}`">{{room.roomName}}</router-link>
           </li>
 
         </ul>
