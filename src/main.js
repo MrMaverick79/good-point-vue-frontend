@@ -11,8 +11,6 @@ import Login from './components/Login.vue'
 import SignUp from './components/SignUp.vue'
 
 
-
-//see https://vueschool.io/articles/vuejs-tutorials/the-benefits-of-the-vue-3-app-initialization-code/
 const gpApp = createApp(App)
 gpApp.component('Login', Login);
 gpApp.component('SignUp', SignUp);
