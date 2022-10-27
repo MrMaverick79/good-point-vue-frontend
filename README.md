@@ -7,7 +7,7 @@
 test-email: test1@test.com
 password: chicken
 
-[Backend Repo]()
+[Backend Repo](https://github.com/MrMaverick79/good-point-backend)
 
 **Tech Stack / Frameworks / Libraries:**
 

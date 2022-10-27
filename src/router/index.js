@@ -8,18 +8,18 @@ export const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-          path: '/good-point-vue-frontend/rooms/:id',
+          path: '/rooms/:id',
           name: 'Chatroom',
           component: Chatroom
         },
         {
-          path: '/good-point-vue-frontend/rooms',
+          path: '/rooms',
           name: 'ChatroomsLobby',
           component: ChatroomsLobby
 
         },
         {
-          path: '/good-point-vue-frontend/signup',
+          path: '/signup',
           name: 'SignUp',
           component: SignUp
         }
