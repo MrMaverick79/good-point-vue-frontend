@@ -41,6 +41,11 @@ export default {
             this.getUser()
         }
 
+        socket.on("foundUser", response=>{
+                // console.log('We received a reponse from the server', response);
+                this.user= response
+            })
+
       
       // if(this.$route.name != 'SignUp' && !this.checkUser()){
       //   this.showLogin=true
